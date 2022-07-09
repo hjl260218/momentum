@@ -1,0 +1,11 @@
+.hidden {
+    display: none;
+} 
+h1 {
+    color: cornflowerblue;
+    transition: .5s ease-in-out;
+}
+
+.clicked{
+    color: tomato;
+}
