@@ -12,15 +12,18 @@ function saveToDos(){
 }
 
 function deleteToDo(event){
-    const li = event.target.parentElement;//target은 클릭된 HTML Element.
-    li.remove(); //parentElement는 그 Eliment의 부모. 즉 여기선 li.
-    localStorage.remove("");
+    const li = event.target.parentElement;
+    //target은 클릭된 HTML Element.parentElement는 그 Eliment의 부모. 즉 여기선 li.
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+    li.remove(); 
+    saveToDos();
 }
 
-function paintToDo(newTodo){
+function paintToDo(newTodoObj){
     const li = document.createElement("li");
     const span = document.createElement("span");
-    span.innerText = newTodo;
+    li.id=newTodoObj.id;
+    span.innerText = newTodoObj.text;
     const button = document.createElement("button");
     button.innerText = "❌";
     button.addEventListener("click", deleteToDo);
@@ -34,8 +37,12 @@ function hadleToDoSubmit(event) {
     event.preventDefault();
     const newTodo = todoInput.value;
     todoInput.value="";
-    toDos.push(newTodo);
-    paintToDo(newTodo);
+    const newTodoObj={
+        text:newTodo,
+        id:Date.now(),//date.now()는 밀리초를 나타내는데 이것을 임의랜덤 아이디로 주기로 한다.
+    }
+    toDos.push(newTodoObj);
+    paintToDo(newTodoObj);
     saveToDos();
 }
 
